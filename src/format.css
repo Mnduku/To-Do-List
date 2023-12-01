@@ -1,0 +1,58 @@
+body{
+    margin: 0px;
+    overflow-x: hidden;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+}
+.top{
+    min-height: 87px;
+    width: 100%;
+    background-color: brown;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.bottom{
+    height: 100%;
+    background-color: blue;
+    display: flex;
+    flex-direction: row;
+}
+.left{
+    height: 100%;
+    width: 30%;
+    min-width: 260px;
+    max-width: 350;
+    background-color: rgb(123, 82, 103);
+    display: flex;
+    flex-direction: column;
+
+}
+.right{
+    width: 100%;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+
+}
+.tasklist{
+    columns: 1;
+    overflow:hidden;
+    margin: 0px;
+    padding: 0px;
+}
+
+@media only screen and (max-width: 800px) {
+    .left {
+      display: none;
+    }
+  }
