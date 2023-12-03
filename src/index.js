@@ -1,11 +1,28 @@
 import './format.css'
 import './style.css'
-import {taskinfo} from './modules'
+import {taskinfo, toggleadd, project, addtask, addproject, storageaval, createstorage,
+loadstorage, checkstorage
+} from './modules'
 
-console.log("imhere")
-let b1 =  document.querySelector("#addtask")
+const storage = {
+    projects: []
+}
 
-b1.addEventListener('onclick', function (e){
-    
+checkstorage(storage)
+
+window.addEventListener("load", (event) => {
+
+let b1 =  document.querySelector(".addproj")
+b1.addEventListener('click', function(e){
+    toggleadd()
+})
+
+let b2 =  document.querySelector(".submit")
+b2.addEventListener('click', function(e){
+    toggleadd()
+    storage.projects.push(new project(addproject()))
+    createstorage(storage.projects)
+})
 
 })
+

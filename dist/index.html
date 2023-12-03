@@ -12,23 +12,45 @@
         </div>
         <div class="bottom">
             <div class="left">
-                <div><a href="" class="head"></a></div>
-                <div class="option"id = "option1"></div>
-                <div class="option"id = "option2"></div>
-                <div class="option"id = "option3"></div>
-                <div class="option"id = "option4"></div>
-                <div><a href="" class="head"></a></div>
-                <div class="option"id = "option5"></div>
-                <div class="option"id = "option6"></div>
-                <div class="option"id = "option7"></div>
-                <div class="option"id = "option8"></div>
-                <div class="option"id = "option9"></div>
-                <div class="option"id = "option10"></div>
-                <button class="addtask" id = "addtask">add</button>
+                <div class="header">
+                    <a class = "menyu">Menu</a>
+                </div>
+                <div class="option">
+                    <img src="images/1.png" class="icon">
+                    <a class="iconname">All Tasks</a>
+                </div>
+                <div class="option">
+                    <img src="images/4.png" class="icon">
+                    <a class="iconname">Recent</a>
+                </div>
+                <div class="option">
+                    <img src="images/7.png" class="icon">
+                    <a class="iconname">Priority</a>
+                </div>
+                <div class="option">
+                    <img src="images/8.png" class="icon">
+                    <a class="iconname" id = "star">Favorited</a>
+                </div>
+                <div class="bar"></div>
+                <div class="header">
+                    <a class="iconname">Projects</a>
+                </div>
+                <div class="projectlist">
+
+                </div>
+                <button class="addproj">+</button>
+
+                <form class = "cname" action = "#" method = "get">
+                <div class="form">
+                    <input type = "text" id = "projname" required/>
+                    <button class = "submit" type = "submit" >Add</button>
+                </div>
+                </form>
+
             </div>
             <div class="right">
                 <ul class="tasklist">
-                    <p class="ptasks"><strong>Current tasks</strong></p>
+                    <p classgit="ptasks"><strong>Current tasks</strong></p>
                 </ul>
             </div>
         </div>
