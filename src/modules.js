@@ -32,10 +32,6 @@ function project(name){
     return this
 }
 
-function addtask(){
-    this.task = new taskinfo
-}
-
 function storageaval(type) {
     return true
 }
@@ -68,4 +64,33 @@ function checkstorage(storage){
     }
 }
 
-export{taskinfo, addproject, toggleadd, project, addtask, storageaval, createstorage, loadstorage, checkstorage}
+function addtask(){
+    let x = document.createElement('div')
+    x.classList.toggle('task')
+    let y = document.getElementsByClassName('tasklist')
+    y.appendChild(x)
+}
+
+function optionscreen(){
+    addtask()
+}
+/*
+functionloadr(){
+    let div = document.querySelector(".right")
+}
+functionloadp(){
+    let div = document.querySelector(".right")
+    
+}
+functionloads(){
+    let div = document.querySelector(".right")
+    
+}
+functionloada(){
+    let div = document.querySelector(".right")
+    
+}
+*/
+
+export{taskinfo, addproject, toggleadd, project, addtask, storageaval, createstorage, loadstorage, checkstorage,
+optionscreen}
