@@ -6,14 +6,15 @@
     font-family: myfontbold;
     src: url(fonts/ab.ttf);
 }
-p{
-    font-family: myfont;
-}
-a{
-    color: black;
-    font-family: myfont;
-}
 
+p, a, label, legend{
+        color: black;
+        font-family: myfont;
+}
+legend{
+    font-size: 26px;
+    margin-bottom: 10px;
+}
 .pheader{
     font-size: 33px;
     margin-left: 40px;
@@ -139,13 +140,30 @@ a{
 }
 
 .optionpane{
-    visibility: hidden;
     position: absolute;
     margin-top: 10vh;
     height: 450px;
     width: 350px;
     border-radius: 5px;
-    background: rgb(255, 255, 255);
+    background: rgba(239, 153, 33, 0.885);
     box-shadow: 0 0 0 1000px rgba(0, 0, 0, .3);
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .3);
+    border: 1px solid rgb(3, 3, 3);
+    display: flex;
+    justify-content: center;
+}
+.tinput{
+    all: unset;
+    background-color: white;
+    border-radius: 10px;
+}
+#tinput1{
+    text-align: center;
+}
+#tinput2{
+    height: 100px;
+    width: 90%;
+}
+.tlabel{
+    margin-bottom: 7px;
 }

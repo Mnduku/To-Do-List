@@ -17,7 +17,7 @@
                 </div>
                 <div class="option start selectedtab">
                     <img src="assets/images/1.png" class="icon">
-                    <a class="iconname">All Tasks</a>
+                    <a class="iconname">All</a>
                 </div>
                 <div class="option">
                     <img src="assets/images/4.png" class="icon">
@@ -62,9 +62,30 @@
                     <div class="task"></div>
                 </ul>
                 <div class="optionpane">
-                     <form action="" class="taskform">
+                     <form action="" method = "get" class="taskform">
+                        <legend>Task info</legend>
+                        <div class = "formdiv"><label for = "tinput"  class = "tlabel" id = "tlabel1">Name</label>
+                        <input type = "text" class = "tinput" id = "tinput1"/></div>
+                        
+                        <div class = "formdiv"><label for = "tinpuut"  class = "tlabel" id = "tlabel2">Description</label>
+                        <textarea class = "tinput" id = "tinput2" cols = "20px" rows="9" maxlength="10" wrap="hard">n
+                            hbkkkkkkkkkkkkkkkkkkkkk
+                        </textarea></div>
 
-                     </form>
+                        <div class="dates">
+                        <div class = "formdiv"><label for = "tinput"  class = "tlabel" id = "tlabel3">Date</label>
+                        <input type = "date" class = "tinput" id = "tinput3"/></div>
+                        <div class = "formdiv"><label for = "tinput"  class = "tlabel" id = "tlabel4">Deadline</label>
+                        <input type = "date" class = "tinput" id = "tinput4"/></div>
+                        </div>
+
+                        <div class = "formdiv"><label for = "tinput"  class = "tlabel" id = "tlabel5">Priority</label>
+                        <input type = "range" class = "tinput" id = "tinput5"/></div>
+                    
+                        <div class="buttons">
+                            <button class="addtasker"></button>
+                            <button class="back"></button>
+                        </div>
                 </div>
             </div>
         </div>
