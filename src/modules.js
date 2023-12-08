@@ -27,8 +27,11 @@ function addproject(){
     return b.textContent
 }
 
-function project(name){
+function project(name, x){
     this.name = name
+    this.index = x
+    this.objtasks = [{name:"deiije"}
+    ]
     return this
 }
 
@@ -72,25 +75,25 @@ function addtask(){
 }
 
 function optionscreen(){
-    addtask()
+    let v  = document.querySelector(".optionpane")
+    v.classList.toggle('active')
 }
-/*
-functionloadr(){
-    let div = document.querySelector(".right")
+
+function showtasks(cp){
+    console.log("hey")
+    let x = document.querySelector('.tasklist')
+    let y = document.querySelectorAll('.task')
+    y.forEach(element => {
+        x.remove(element)
+    });
+    for(el in cp.objtasks){
+            let e = document.createElement('div')
+            e.classList.toggle('task')
+            let f = document.getElementsByClassName('tasklist')
+            e.textContent = cp.name
+            f.appendChild(e)
+    }
 }
-functionloadp(){
-    let div = document.querySelector(".right")
-    
-}
-functionloads(){
-    let div = document.querySelector(".right")
-    
-}
-functionloada(){
-    let div = document.querySelector(".right")
-    
-}
-*/
 
 export{taskinfo, addproject, toggleadd, project, addtask, storageaval, createstorage, loadstorage, checkstorage,
-optionscreen}
+optionscreen, showtasks}

@@ -13,7 +13,7 @@ p, a, label, legend{
 }
 legend{
     font-size: 26px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 .pheader{
     font-size: 33px;
@@ -140,6 +140,7 @@ legend{
 }
 
 .optionpane{
+    visibility: hidden;
     position: absolute;
     margin-top: 10vh;
     height: 450px;
@@ -152,18 +153,59 @@ legend{
     display: flex;
     justify-content: center;
 }
+.active{
+    visibility: visible;
+}
 .tinput{
     all: unset;
     background-color: white;
     border-radius: 10px;
+    box-shadow: 0px 0px 5px 1px  rgb(121, 120, 120);
 }
 #tinput1{
     text-align: center;
 }
 #tinput2{
-    height: 100px;
-    width: 90%;
+    text-align:start;
+    white-space: pre-line;
+    overflow-wrap: break-word;
+    padding: 2px;
 }
+#tinput3, #tinput4 {
+    width: 110px;
+    align-content: center;
+    padding: 3px;
+}
+
 .tlabel{
     margin-bottom: 7px;
+}
+.addtasker, .back{
+    width: 30px;
+    height: 37px;
+    border: none;
+    font-size: 30px;
+    box-shadow: 0px 1px 3px black;
+    background-color: white;
+    width: 60px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+.back{
+    background-image: url("images/9.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-color: red;
+    background-size: 50%;
+}
+.addtasker{
+    background-color: rgb(30, 212, 30);
+}
+#formdiv5{
+    margin-bottom: 40px;
+}
+.addtasker:hover, .back:hover{
+    box-shadow:  0px 1px 1px 1px rgb(24, 23, 23);
+    cursor: pointer;
 }
