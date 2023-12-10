@@ -5,16 +5,14 @@ import './images/4.png'
 import './images/7.png'
 import './images/8.png'
 import {taskinfo, toggleadd, project, addtask, addproject, storageaval, createstorage,
-loadstorage, checkstorage, optionscreen, showtasks
+loadstorage, checkstorage, optionscreen, showtasks, expcp, expstor, exppi, exppc
 } from './modules'
 
-const storage = {
-    projects: []
-}
-let currentproject 
-let projectindex = 0
-
-checkstorage(storage)
+let currentproject = expcp()
+let storage = expstor()
+let projectindex = exppi()
+let projectchanged = exppc()
+checkstorage()
 
 window.addEventListener("load", (event) => {
 
@@ -28,7 +26,7 @@ b2.addEventListener('click', function(e){
     if(document.querySelector("#projname").value == "" || document.querySelector("#projname").value == " ") return
     toggleadd()
     storage.projects.push(new project(addproject(),  projectindex))
-    let projectindex = projectindex +  1
+    projectindex = projectindex +  1
     createstorage(storage.projects)
 })
 
@@ -41,27 +39,6 @@ b3.forEach(element => { element.addEventListener('click', function(e){
         currenttab.classList.toggle("selectedtab")
         currenttab = element
     }
-})})
-
-let b4 = document.querySelectorAll(".project")
-let projectchanged = false
-b4.forEach(element => { element.addEventListener('click', function(e){
-    if(projectchanged == false){
-        projectchanged = true
-        currentproject = element
-        element.classList.toggle("selectedtab")
-        showtasks(storage.projects[currentproject.index])
-    }
-    else if(currentproject == element){
-        return
-    }
-    else{
-        currentproject.classList.toggle("selectedtab")
-        currentproject = element
-        element.classList.toggle("selectedtab")
-        showtasks(storage.projects[currentproject.index])
-    }
-    
 })})
 
 let b5 = document.querySelector(".addtask")
@@ -78,9 +55,4 @@ let b7 = document.querySelector(".addtasker")
 b7.addEventListener('click', function(e){
     optionscreen()
     addtask(currentproject)
-})
-
-
-
-})
-
+})})

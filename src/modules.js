@@ -1,3 +1,25 @@
+let storage = {
+    projects: []
+}
+
+let currentproject 
+let projectindex = 0
+let projectchanged = false
+let projectlist = []
+
+function expcp(){
+    return currentproject
+}
+function expstor(){
+    return storage
+}
+function exppi(){
+    return projectindex
+}
+function exppc(){
+    return projectchanged
+}
+
 function taskinfo(a,b,c,d,e,f,g){
     this.name = a
     this.desc = b
@@ -15,6 +37,8 @@ function toggleadd(){
     b1.classList.toggle("invisible")
     cname.classList.toggle("visible")
 }
+
+
 function addproject(){
     console.log("checking")
     let a =  document.querySelector(".projectlist")
@@ -24,14 +48,42 @@ function addproject(){
     b.textContent = c.value
     c.value = ""
     a.appendChild(b)
+    b.classList.toggle("selectedtab")
+    addprojectlistener(b)
+    projectlist.push({
+        name: b.textContent,
+        link: b})
+    console.log(projectlist)
+    projectindex = projectindex + 1
+    untoggle()
+    currentproject = b
+    currentproject.classList.toggle("selectedtab")
     return b.textContent
+}
+
+function addprojectlistener(b){
+    b.addEventListener('click', function(e){
+    console.log("dsd")
+    if(currentproject == b)return
+    if(!projectlist) return
+    untoggle()
+    currentproject = b
+    b.classList.toggle("selectedtab")
+    showtasks(currentproject)
+})}
+
+function untoggle(){
+    console.log(projectlist)
+    if(!projectlist) return
+    projectlist.forEach(el => {
+        el.link.classList.remove("selectedtab")
+    });
 }
 
 function project(name, x){
     this.name = name
     this.index = x
-    this.objtasks = [{name:"deiije"}
-    ]
+    this.objtasks = []
     return this
 }
 
@@ -41,32 +93,40 @@ function storageaval(type) {
 
 function createstorage(a){
     localStorage.setItem("storage", JSON.stringify(a))
+    localStorage.setItem("currentproject", JSON.stringify(currentproject))
+    localStorage.setItem("projectchanged", JSON.stringify(projectchanged))
+    localStorage.setItem("projectindex", JSON.stringify(projectindex))
+    localStorage.setItem("projectlist", JSON.stringify(projectlist))
 }
-
 function loadstorage(){
-    let oldsave = JSON.parse(localStorage.getItem("storage"))
+    storage = JSON.parse(localStorage.getItem("storage"))
+    currentproject = JSON.parse(localStorage.getItem("currentproject"))
+    projectchanged = JSON.parse(localStorage.getItem("projectchanged"))
+    projectindex = JSON.parse(localStorage.getItem("projectindex"))
+    projectlist = JSON.parse(localStorage.getItem("projectlist"))
     let a =  document.querySelector(".projectlist")
-    for(let i = 0; i < oldsave.length; i++){
-        console.log(oldsave.length)
+    console.log(projectlist)
+    
+    if(!projectlist)return
+    projectlist.forEach(proj => {
         let b = document.createElement("div")
         b.classList.toggle('project')
-        b.textContent = oldsave[i].name
+        b.textContent = proj.name
         a.appendChild(b)
-    }
-    return oldsave
-
+        proj.link = b
+        addprojectlistener(b)
+    });
 }
-function checkstorage(storage){
+function checkstorage(){
     if(storageaval()){
         if (!localStorage.getItem("storage")) {
-            createstorage(storage.projects);
+            createstorage();
         } 
         else{
-        storage.projects = loadstorage()
+        loadstorage()
         }
     }
 }
-
 function addtask(){
     let x = document.createElement('div')
     x.classList.toggle('task')
@@ -79,21 +139,14 @@ function optionscreen(){
     v.classList.toggle('active')
 }
 
-function showtasks(cp){
+function showtasks(currentproject){
     console.log("hey")
     let x = document.querySelector('.tasklist')
     let y = document.querySelectorAll('.task')
     y.forEach(element => {
         x.remove(element)
     });
-    for(el in cp.objtasks){
-            let e = document.createElement('div')
-            e.classList.toggle('task')
-            let f = document.getElementsByClassName('tasklist')
-            e.textContent = cp.name
-            f.appendChild(e)
-    }
 }
 
 export{taskinfo, addproject, toggleadd, project, addtask, storageaval, createstorage, loadstorage, checkstorage,
-optionscreen, showtasks}
+optionscreen, showtasks, expcp, expstor, exppi, exppc}
