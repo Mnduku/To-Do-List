@@ -4,16 +4,17 @@ import './images/1.png'
 import './images/4.png'
 import './images/7.png'
 import './images/8.png'
-import {taskinfo, toggleadd, project, addtask, addproject, storageaval, createstorage,
-loadstorage, checkstorage, optionscreen, showtasks, expcp, expstor, exppi, exppc
+import './images/10.png'
+import './images/11.png'
+import {taskinfo, toggleadd, addtask, addproject, storageaval, createstorage,
+loadstorage, checkstorage, optionscreen, showtasks, expcp, exppi, exppc, dosomething, bapage, fwardapage
 } from './modules'
 
 let currentproject = expcp()
-let storage = expstor()
 let projectindex = exppi()
 let projectchanged = exppc()
-checkstorage()
 
+checkstorage()
 window.addEventListener("load", (event) => {
 
 let b1 =  document.querySelector(".addproj")
@@ -25,9 +26,7 @@ let b2 =  document.querySelector(".submit")
 b2.addEventListener('click', function(e){
     if(document.querySelector("#projname").value == "" || document.querySelector("#projname").value == " ") return
     toggleadd()
-    storage.projects.push(new project(addproject(),  projectindex))
-    projectindex = projectindex +  1
-    createstorage(storage.projects)
+    dosomething()
 })
 
 let b3 = document.querySelectorAll(".option")
@@ -51,8 +50,23 @@ b6.addEventListener('click', function(e){
     optionscreen()
 })
 
-let b7 = document.querySelector(".addtasker")
-b7.addEventListener('click', function(e){
+var form = document.querySelector(".taskform");
+function handleForm(event) { event.preventDefault(); } 
+form.addEventListener('submit', handleForm);
+let at = document.querySelector('.addtasker')
+at.addEventListener('click', function(e){
+    console.log('hola')
+    if(form.checkValidity() == false) return
     optionscreen()
-    addtask(currentproject)
-})})
+    addtask()
+})
+})
+
+let b7 = document.querySelector(".pageback")
+b7.addEventListener('click', function(e){
+    bapage()
+})
+let b8 = document.querySelector(".pageforward")
+b8.addEventListener('click', function(e){
+    fwardapage()
+})

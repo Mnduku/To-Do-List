@@ -1,6 +1,3 @@
-let storage = {
-    projects: []
-}
 
 let currentproject 
 let projectindex = 0
@@ -10,9 +7,6 @@ let projectlist = []
 function expcp(){
     return currentproject
 }
-function expstor(){
-    return storage
-}
 function exppi(){
     return projectindex
 }
@@ -20,17 +14,15 @@ function exppc(){
     return projectchanged
 }
 
-function taskinfo(a,b,c,d,e,f,g){
+function taskinfo(a,b,c,d,e){
     this.name = a
     this.desc = b
     this.date = c
     this.due = d
     this.priority = e
-    this.favorites = f
-    this.completion =  g
-    console.log("sinjfjnf")
     return this
 }
+
 function toggleadd(){
     let b1 =  document.querySelector(".addproj")
     let cname =  document.querySelector(".cname")
@@ -52,12 +44,20 @@ function addproject(){
     addprojectlistener(b)
     projectlist.push({
         name: b.textContent,
-        link: b})
+        link: b,
+        tasks: [],
+        taskpages: [],
+        pagecount: 1,
+        taskindex: 0,
+        currentpage: 1,
+    })
     console.log(projectlist)
     projectindex = projectindex + 1
     untoggle()
     currentproject = b
     currentproject.classList.toggle("selectedtab")
+    showtasks(currentproject)
+    createstorage()
     return b.textContent
 }
 
@@ -79,31 +79,25 @@ function untoggle(){
         el.link.classList.remove("selectedtab")
     });
 }
-
-function project(name, x){
-    this.name = name
-    this.index = x
-    this.objtasks = []
-    return this
-}
-
 function storageaval(type) {
     return true
 }
+function dosomething(){
+    addproject()
+}
 
-function createstorage(a){
-    localStorage.setItem("storage", JSON.stringify(a))
+function createstorage(){
     localStorage.setItem("currentproject", JSON.stringify(currentproject))
     localStorage.setItem("projectchanged", JSON.stringify(projectchanged))
     localStorage.setItem("projectindex", JSON.stringify(projectindex))
     localStorage.setItem("projectlist", JSON.stringify(projectlist))
 }
 function loadstorage(){
-    storage = JSON.parse(localStorage.getItem("storage"))
     currentproject = JSON.parse(localStorage.getItem("currentproject"))
     projectchanged = JSON.parse(localStorage.getItem("projectchanged"))
     projectindex = JSON.parse(localStorage.getItem("projectindex"))
     projectlist = JSON.parse(localStorage.getItem("projectlist"))
+    console.log(projectlist)
     let a =  document.querySelector(".projectlist")
     console.log(projectlist)
     
@@ -119,19 +113,43 @@ function loadstorage(){
 }
 function checkstorage(){
     if(storageaval()){
-        if (!localStorage.getItem("storage")) {
+        if (!localStorage.getItem("projectlist")) {
             createstorage();
+            console.log("loading new")
         } 
         else{
         loadstorage()
+        console.timeLog("loading old")
         }
     }
 }
 function addtask(){
+    const form = document.querySelector('.taskform')
+    const info1 = document.querySelector('#tinput1').value
+    const info2 = document.querySelector('#tinput2').value
+    const info3 = document.querySelector('#tinput3').value
+    const info4 = document.querySelector('#tinput4').value
+    const info5 = document.querySelector('#tinput5').value
+    let newtask = new taskinfo(info1,info2,info3,info4,info5)
+    let index = projectlist.findIndex(o => o.name === currentproject.textContent);
+    projectlist[index].tasks.push(newtask)
+    projectlist[index].taskindex = projectlist[index].taskindex + 1
     let x = document.createElement('div')
     x.classList.toggle('task')
-    let y = document.getElementsByClassName('tasklist')
-    y.appendChild(x)
+    x.textContent = newtask.name
+    let y = document.querySelector('.tasklist')
+
+    if(projectlist[index].taskindex >= 8){
+        projectlist[index].taskpages.push(y)
+        y = generatenewpage(projectlist[index])
+        y.append(x)
+        let main = document.querySelector(".right")
+        main.appendChild(y)
+    }
+    else{
+        y.appendChild(x)
+    }
+    createstorage()
 }
 
 function optionscreen(){
@@ -141,12 +159,46 @@ function optionscreen(){
 
 function showtasks(currentproject){
     console.log("hey")
-    let x = document.querySelector('.tasklist')
+    let x = document.querySelector('.right')
     let y = document.querySelectorAll('.task')
-    y.forEach(element => {
-        x.remove(element)
+    let z = document.createElement("ul")
+    let w = document.querySelector(".tasklist")
+    x.removeChild(w)
+    z.classList.toggle("tasklist")
+    let index = projectlist.findIndex(o => o.name === currentproject.textContent);
+    let counter = 0
+    let pagecount = 1
+    projectlist[index].tasks.forEach(element => {
+        let a = document.createElement('div')
+        a.classList.toggle('task')
+        a.textContent = element.name
+        z.appendChild(a)
+        counter = counter + 1
     });
+    x.appendChild(z)
 }
 
-export{taskinfo, addproject, toggleadd, project, addtask, storageaval, createstorage, loadstorage, checkstorage,
-optionscreen, showtasks, expcp, expstor, exppi, exppc}
+function generatenewpage(project){
+    console.log("or here")
+    project.pagecount = project.pagecount + 1
+    let w = document.querySelector(".tasklist")
+    project.taskpages.push(w)
+    project.taskindex = 0
+    w = document.createElement("ul")
+    w.classList.toggle("tasklist")
+    let main = document.querySelector(".right")
+    main.removeChild(project.taskpages[project.currentpage-1])
+    project.currentpage = project.currentpage + 1
+    return w
+}
+
+function bapage(){
+return
+
+}
+function fwardapage(){
+
+}
+
+export{taskinfo, addproject, toggleadd, addtask, storageaval, createstorage, loadstorage, checkstorage,
+optionscreen, showtasks, exppc, exppi, expcp, dosomething, bapage, fwardapage}
