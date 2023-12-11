@@ -134,24 +134,36 @@ function addtask(){
     let index = projectlist.findIndex(o => o.name === currentproject.textContent);
     projectlist[index].tasks.push(newtask)
     projectlist[index].taskindex = projectlist[index].taskindex + 1
-    let x = document.createElement('div')
-    x.classList.toggle('task')
-    x.textContent = newtask.name
+    let x = createtask(newtask)
     let y = document.querySelector('.tasklist')
 
-    if(projectlist[index].taskindex >= 8){
-        projectlist[index].taskpages.push(y)
+//=========================================
+    projectlist[index].taskpages.push(y)
+    if(projectlist[index].taskindex >= 3){
+        (console.log("max reached"))
+        projectlist[index].taskpages[projectlist[index].currentpage] = y
         y = generatenewpage(projectlist[index])
-        y.append(x)
+        projectlist[index].taskpages.push(y)
+        y.appendChild(x)
         let main = document.querySelector(".right")
         main.appendChild(y)
     }
+//===================================================
+
+
     else{
         y.appendChild(x)
     }
     createstorage()
 }
-
+//==================================================
+function createtask(newtask){
+    let x = document.createElement('div')
+    x.classList.toggle('task')
+    x.textContent = newtask.name
+    return x
+}
+//==========================================================
 function optionscreen(){
     let v  = document.querySelector(".optionpane")
     v.classList.toggle('active')
@@ -180,23 +192,45 @@ function showtasks(currentproject){
 
 function generatenewpage(project){
     console.log("or here")
-    project.pagecount = project.pagecount + 1
     let w = document.querySelector(".tasklist")
-    project.taskpages.push(w)
-    project.taskindex = 0
+    project.taskindex = 1
     w = document.createElement("ul")
     w.classList.toggle("tasklist")
     let main = document.querySelector(".right")
+    project.pagecount = project.pagecount + 1
+
+    //======================================================
     main.removeChild(project.taskpages[project.currentpage-1])
+    //===================================================
     project.currentpage = project.currentpage + 1
     return w
 }
 
 function bapage(){
-return
+    let index = projectlist.findIndex(o => o.name === currentproject.textContent);
+    let project = projectlist[index]
+    if(projectlist[index].currentpage  == 1) return
+    let main = document.querySelector(".right")
+
+    console.log(project.taskpages)
+    console.log(project.pagecount)
+    console.log(project.currentpage)
+    main.removeChild(project.taskpages[project.currentpage-1])
+    
+
+    project.currentpage = project.currentpage  - 1
+
+    main.appendChild(project.taskpages[project.currentpage-1])
 
 }
 function fwardapage(){
+    if(project.currentpage  == project.pagecount) return
+    let main = document.querySelector(".right")
+    main.removeChild(project.taskpages[project.currentpage-1])
+
+    project.currentpage  =  project.currentpage + 1
+
+    main.appendChild(project.taskpages[project.currentpage-1])
 
 }
 
