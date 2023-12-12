@@ -17,7 +17,7 @@
                 </div>
                 <div class="option start selectedtab">
                     <img src="assets/images/1.png" class="icon">
-                    <a class="iconname">All</a>
+                    <a class="iconname" id = "alltasks">All</a>
                 </div>
                 <div class="option">
                     <img src="assets/images/4.png" class="icon">
@@ -51,23 +51,6 @@
             <div class="right">
                 <button class="addtask" title = "Add Project">+</button>
                 <ul class="tasklist">
-                    <div class="task">COCK and balls
-                        <div class="dates">
-                            <a class="due" id = "added">Added:</a>
-                            <a class="due" id = "due">Due:</a>
-                        </div>
-                        <button class="removethis" title = "Remove this task"></button>
-                        <button class="favor" title = "Favorite this task"></button>
-                    </div>
-                    <div class="task">COCK and balls</div>
-                    <div class="task">COCK and balls</div>
-                    <div class="task">COCK and balls</div>
-                    <div class="task">COCK and balls</div>
-                    <div class="task">COCK and balls</div>
-                    <div class="task">COCK and balls</div>
-                    <div class="task">COCK and balls</div>
-                    <div class="task">COCK and balls</div>
-                    <div class="task">COCK and balls</div>
                 </ul>
                 <div class="pages">
                     <button class="pageback"></button>
@@ -81,16 +64,14 @@
                         <input type = "text"  class = "tinput" id = "tinput1" maxlength="15" required/></div>
                         
                         <div class = "formdiv"><label for = "tinput2"  class = "tlabel" id = "tlabel2">Description</label>
-                        <textarea class = "tinput" id = "tinput2" wrap="hard" maxlength="75"></textarea></div>
+                        <textarea class = "tinput" id = "tinput2" wrap="hard" maxlength="133"></textarea></div>
 
                         <div class="dates">
-                        <div class = "formdiv type"><label for = "tinput3"  class = "tlabel" id = "tlabel3">Date</label>
+                        <div class = "formdiv type"><label for = "tinput3"   class = "tlabel" id = "tlabel3">Date</label>
                         <input type = "date" class = "tinput" id = "tinput3"/></div>
                         <div class = "formdiv type"><label for = "tinput4"  class = "tlabel" id = "tlabel4">Deadline</label>
                         <input type = "date" class = "tinput" id = "tinput4"/></div>
                         </div>
-                        <div class = "formdiv" id = "formdiv5" ><label for = "tinput5"  class = "tlabel" id = "tlabel5">Priority</label>
-                        <input type = "range" class = "tinput" id = "tinput5"/></div>
                     
                         <div class="buttons">
                             <button class="addtasker" title = "Add Task" type  = "submit">+</button>

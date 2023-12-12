@@ -15,12 +15,12 @@ p, a, label, legend{
 }
 legend{
     font-size: 26px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .pheader{
     font-size: 33px;
     margin-left: 40px;
-    position: fixed;
+    position: absolute;
     left: -1%;
     font-family: myfontbold;
 }
@@ -154,21 +154,23 @@ legend{
     font-size: 30px;
     text-align: center;
 }
-
+input:focus,  textarea:focus{
+    border: 1px solid black;
+}
 .optionpane{
+    z-index: 2;
     visibility: hidden;
     position: absolute;
     margin-top: 10vh;
-    height: 450px;
+    height: 400px;
     width: 350px;
-    border-radius: 5px;
-    background: rgba(239, 153, 33, 0.885);
+    border-radius: 8px;
+    background: rgba(239, 153, 33);
     box-shadow: 0 0 0 1000px rgba(0, 0, 0, .3);
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .3);
     border: 1px solid rgb(3, 3, 3);
     display: flex;
     justify-content: center;
-    opacity: 200%;
 }
 .active{
     visibility: visible;
@@ -182,22 +184,26 @@ legend{
     all: unset;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0px 0px 5px 1px  rgb(121, 120, 120);
 }
 #tinput1{
     text-align: center;
     width: 50%;
+    margin-bottom: 10px;
 }
 #tinput2{
     text-align:start;
     white-space: pre-line;
     overflow-wrap: break-word;
     padding: 2px;
+    height: 75px;
+    overflow: hidden;
+    margin-bottom: 10px;
 }
 #tinput3, #tinput4 {
     width: 110px;
     align-content: center;
     padding: 3px;
+    font-size: 13px;
 }
 .tlabel{
     margin-bottom: 7px;
@@ -207,7 +213,6 @@ legend{
     height: 37px;
     border: none;
     font-size: 30px;
-    box-shadow: 0px 1px 3px black;
     background-color: white;
     width: 60px;
     border-radius: 10px;
@@ -222,14 +227,14 @@ legend{
     background-size: 50%;
 }
 .addtasker{
-    background-color: rgb(30, 212, 30);
+    background-color: rgb(255, 255, 255);
     font-family: myfont;
 }
 #formdiv5{
     margin-bottom: 40px;
 }
 .addtasker:hover, .back:hover{
-    box-shadow:  0px 1px 1px 1px rgb(24, 23, 23);
+    transform: scale(105%);
     cursor: pointer;
 }
 .pages{
@@ -239,7 +244,7 @@ legend{
     align-content: center;
     width: 130px;
     justify-content: space-around;
-    top: 850px;
+    top: 775px;
 }
 .pageforward{
     height: 25px;
@@ -262,12 +267,12 @@ legend{
 .pageno{
     font-family: myfont;
 }
-.dates{
+.dates2{
     position: absolute;
     font-size: 12px;
     display: flex;
     flex-direction: column;
-    left: 250px;
+    left: 300px;
 }
 
 .removethis{
@@ -294,7 +299,14 @@ legend{
     border: none;
 }
 .favorited{
+    position: absolute;
     background: url(images/favorited.png);
+    background-size: cover;
+    height: 25px;
+    width: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
 }
 
 .favor:hover, .removethis:hover, .favotited:hover{

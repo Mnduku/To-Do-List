@@ -5,15 +5,41 @@ let projectchanged = false
 let projectlist = []
 let pagecounter = 0
 let pageind = 1
-const max = 10
+let currentoption = 0
+let alltaskslist  = []
+const max = 9
+let ignoreprojectsettings = true
+
+function tasklistarrow(){
+    let n = document.querySelector('body')
+    n.addEventListener('keydown', function(event) {
+        let key = event.key;
+        if(key == "ArrowLeft"){
+            bapage()
+        }
+        if(key == "ArrowRight"){
+            fwardapage()
+        }
+    });
+}
 
 function getselectedproject(){
     let index = projectlist.findIndex(o => o.name === currentproject.textContent);
     let thisproject = projectlist[index]
     return thisproject
 }
-function getworkingtask(){
-    return
+function getworkingtask(task){
+    let info = task.textContent
+    let thisproject = getselectedproject()
+    let tasklist = thisproject.tasks
+    let index = tasklist.findIndex(o =>  info.includes(o.name));
+    tasklist.forEach(element => {
+    });
+    return index
+}
+
+function gettaskproject(){
+
 }
 
 function expcp(){
@@ -26,12 +52,12 @@ function exppc(){
     return projectchanged
 }
 
-function taskinfo(a,b,c,d,e){
+function taskinfo(a,b,c,d){
     this.name = a
     this.desc = b
     this.date = c
     this.due = d
-    this.priority = e
+    this.priority = false
     return this
 }
 
@@ -71,9 +97,21 @@ function addproject(){
 
 function addprojectlistener(b){
     b.addEventListener('click', function(e){
-    if(currentproject == b)return
+    if(currentproject == b){
+        console.log("gay")
+        b.classList.toggle("selectedtab")
+        switch(currentoption){
+            case 0: alltasks()
+            case 1:
+            case 2:
+            case 3:
+        }
+        ignoreprojectsettings = true
+        return
+    }
     if(!projectlist) return
     untoggle()
+    ignoreprojectsettings = false
     currentproject = b
     b.classList.toggle("selectedtab")
     let thisproject = getselectedproject()
@@ -85,6 +123,14 @@ function updatepages(t){
     let v = document.querySelector(".pageno")
     pagecounter = 0
     pageind = Math.ceil(t.tasks.length / max)
+    if(pageind == 0) pageind == 1
+    v.textContent =  (pagecounter + 1) + " of " + pageind
+}
+
+function updatepages2(t){
+    let v = document.querySelector(".pageno")
+    pagecounter = 0
+    pageind = Math.ceil(t.length / max)
     if(pageind == 0) pageind == 1
     v.textContent =  (pagecounter + 1) + " of " + pageind
 }
@@ -111,12 +157,14 @@ function dosomething(){
 }
 
 function createstorage(){
+    localStorage.setItem("alltasks", JSON.stringify(alltaskslist))
     localStorage.setItem("currentproject", JSON.stringify(currentproject))
     localStorage.setItem("projectchanged", JSON.stringify(projectchanged))
     localStorage.setItem("projectindex", JSON.stringify(projectindex))
     localStorage.setItem("projectlist", JSON.stringify(projectlist))
 }
 function loadstorage(){
+    alltaskslist = JSON.parse(localStorage.getItem("alltasks"))
     currentproject = JSON.parse(localStorage.getItem("currentproject"))
     projectchanged = JSON.parse(localStorage.getItem("projectchanged"))
     projectindex = JSON.parse(localStorage.getItem("projectindex"))
@@ -153,16 +201,17 @@ function checkstorage(){
 }
 function addtask(){
     const form = document.querySelector('.taskform')
-    const info1 = document.querySelector('#tinput1').value
+    let info1 = document.querySelector('#tinput1').value
     const info2 = document.querySelector('#tinput2').value
     const info3 = document.querySelector('#tinput3').value
     const info4 = document.querySelector('#tinput4').value
-    const info5 = document.querySelector('#tinput5').value
     let thisproject = getselectedproject()
-    thisproject.tasks.push(new taskinfo(Math.random(),info2,info3,info4,info5))
+    info1 = Math.random()  //RANDOM INPUT GENERATOR
+    thisproject.tasks.push(new taskinfo(info1,info2,info3,info4))
+    alltaskslist.push(new taskinfo(info1,info2,info3,info4))
+    createstorage()
     showtasks(thisproject)
     updatepages(thisproject)
-    createstorage()
 }
 
 function createtask(newtask){
@@ -170,11 +219,13 @@ function createtask(newtask){
     x.classList.toggle('task')
     x.textContent = newtask.name
     let a = document.createElement('div')
-    a.classList.toggle("dates")
+    a.classList.toggle("dates2")
     let b = document.createElement('a')
     b.classList.toggle("added")
     let c = document.createElement('a')
     c.classList.toggle("due")
+    b.textContent = "Added: " + newtask.date
+    c.textContent = "Deadline: "+ newtask.due
     a.appendChild(b)
     a.appendChild(c)
     x.appendChild(a)
@@ -182,8 +233,10 @@ function createtask(newtask){
     d.classList.toggle("removethis")
     let e = document.createElement('button')
     e.classList.toggle("favor")
-    e.addEventListener('click', favorpress(d))
-    d.addEventListener('click', delpress(d))
+    console.log(newtask.priority)
+    if(newtask.priority == true){e.classList.toggle('favorited')}
+    e.addEventListener('click', function(){ favorpress(e)})
+    d.addEventListener('click', function(){delpress(d)})
     x.appendChild(d)
     x.appendChild(e)
     return x
@@ -193,6 +246,17 @@ function createtask(newtask){
 function optionscreen(){
     let v  = document.querySelector(".optionpane")
     v.classList.toggle('active')
+    let c = document.querySelector("#tinput3")
+    let now = new Date();
+    let month = (now.getMonth() + 1);               
+    let day = now.getDate();
+    if (month < 10) 
+        month = "0" + month;
+    if (day < 10) 
+        day = "0" + day;
+    let today = now.getFullYear() + '-' + month + '-' + day;
+    console.log(today)
+    c.value = today
 }
 
 function showtasks(thisproject){
@@ -205,7 +269,7 @@ function showtasks(thisproject){
     if(thisproject.tasks === undefined) return
     for(let i = 0; i < max;  i++){
         if(j >= (thisproject.tasks.length)) return
-        let v = createtask(thisproject.tasks[j])
+        let v = createtask(thisproject.tasks[thisproject.tasks.length - (j+1)])
         j = j + 1
         z.appendChild(v)
     }
@@ -219,16 +283,41 @@ function showtasks2(a,b, backone){
     let z = document.querySelector(".tasklist")
     z.innerHTML = ""
 
-    for(let i = a; i < b; i++){
-        if(i >= thisproject.tasks.length) break
-        let v = createtask(thisproject.tasks[i])
-        z.appendChild(v)
+    if(ignoreprojectsettings){
+        for(let i = a; i < b; i++){
+            if(i >= alltaskslist.length) break
+            let v = createtask(alltaskslist[alltaskslist.length  - (i + 1)])
+            z.appendChild(v)
+        }
+    }
+    else{
+        for(let i = a; i < b; i++){
+            if(i >= thisproject.tasks.length) break
+            let v = createtask(thisproject.tasks[thisproject.tasks.length  - (i + 1)])
+            z.appendChild(v)
+        }
     }
     x.appendChild(z)
     let v = document.querySelector(".pageno")
-
     if(backone) v.textContent =  (pagecounter) + " of " + pageind
     if(!backone)v.textContent =  (pagecounter + 1) + " of " + pageind
+}
+
+function showtasks3(chosen){
+    let x = document.querySelector('.right')
+    let y = document.querySelectorAll('.task')
+    let z = document.querySelector(".tasklist")
+    z.innerHTML = ""
+    let j = 0
+    if(chosen == undefined) return
+    for(let i = 0; i < max;  i++){
+        if(j >= (chosen.length)) return
+        let v = createtask(chosen[chosen.length - (j+1)])
+        j = j + 1
+        z.appendChild(v)
+    }
+    x.appendChild(z)
+
 }
 function generatenewpage(project){
 }
@@ -245,19 +334,57 @@ function fwardapage(){
 }
 
 function favorpress(e){
-    //e.classList.toggle('favorited')
-    console.log("heya") //stop this from calling 100000 times
+    e.classList.toggle('favorited')
     let thisproject = getselectedproject()
-    let thistask = getworkingtask()
-}
-function delpress(e){
-    let thisproject = getselectedproject()
-    let thistask = getworkingtask()
-}
-function taskpress(e){
-    let thisproject = getselectedproject()
-    let thistask = getworkingtask()
+    let thistask = getworkingtask(e.parentNode)
+    thisproject.tasks[thistask].priority = true
+    createstorage()
 }
 
+function delpress(e){
+    let thisproject = getselectedproject()
+    let thistask = getworkingtask(e.parentNode)
+    e.parentNode.parentNode.removeChild(e.parentNode)
+    thisproject.tasks.splice(thistask,1)
+    createstorage()
+    showtasks(thisproject)
+    updatepages(thisproject)
+}
+
+function alltasks(){
+    if(alltaskslist == undefined) return
+     showtasks3(alltaskslist)
+     updatepages2(alltaskslist)
+}
+
+function favtasks(){
+    let favlist = []
+    alltaskslist.forEach(element => {
+        if(element.priority = true){favlist.push(element)}
+    });
+    showtasks3(favlist)
+    updatepages2(favlist)
+    
+}
+function favtasks2(a){
+    
+}
+
+
+function taskpress(e){
+    let thisproject = getselectedproject()
+    let thistask = getworkingtask(e.parentNode)
+}
+
+
+//to do
+
+//add seperation from project functionality to menu functionality
+//add no task page
+//make project page scrollable
+//add description on click
+//intro page maybe?
+
 export{taskinfo, addproject, toggleadd, addtask, storageaval, createstorage, loadstorage, checkstorage,
-optionscreen, showtasks, exppc, exppi, expcp, dosomething, bapage, fwardapage}
+optionscreen, showtasks, exppc, exppi, expcp, dosomething, bapage, fwardapage, alltasks,
+favtasks, tasklistarrow}

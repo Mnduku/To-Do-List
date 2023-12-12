@@ -1,6 +1,7 @@
 body{
     margin: 0px;
     overflow-x: hidden;
+    overflow-y: hidden;
     background-color: rgb(244, 240, 240);
 }
 .main{
@@ -11,6 +12,7 @@ body{
     background-color: black;
 }
 .top{
+    height:100px;
     min-height: 87px;
     width: 100%;
     background-color: rgb(245, 158, 18);
@@ -33,9 +35,9 @@ body{
     display: flex;
     flex-direction: column;
     padding-top: 20px;
-    flex-shrink: 1 0 auto;
     align-content: center;
     align-items: center;
+    flex: 1 1 auto;
 }
 .right{
     width: 100%;
@@ -49,6 +51,7 @@ body{
 
 }
 .tasklist{
+    z-index: 1;
     columns: 1;
     margin: 0px;
     padding: 0px; 
@@ -114,4 +117,5 @@ body{
 }
 .buttons{
     display: flex;
+    margin-top: 30px;
 }

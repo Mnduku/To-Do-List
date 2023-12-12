@@ -9,8 +9,8 @@ import './images/11.png'
 import './images/del.png'
 import './images/favor.png'
 import './images/favorited.png'
-import {taskinfo, toggleadd, addtask, addproject, storageaval, createstorage,
-loadstorage, checkstorage, optionscreen, showtasks, expcp, exppi, exppc, dosomething, bapage, fwardapage
+import { toggleadd, addtask,checkstorage, optionscreen, alltasks, expcp, exppi, exppc, dosomething, bapage, fwardapage,
+    tasklistarrow, favtasks
 } from './modules'
 
 let currentproject = expcp()
@@ -19,6 +19,8 @@ let projectchanged = exppc()
 
 checkstorage()
 window.addEventListener("load", (event) => {
+tasklistarrow()
+alltasks()
 
 let b1 =  document.querySelector(".addproj")
 b1.addEventListener('click', function(e){
@@ -73,4 +75,13 @@ b7.addEventListener('click', function(e){
 let b8 = document.querySelector(".pageforward")
 b8.addEventListener('click', function(e){
     fwardapage()
+})
+
+let b9 = document.querySelector("#alltasks")
+b9.addEventListener('click', function(e){
+    alltasks()
+})
+let b12 = document.querySelector("#star")
+b12.addEventListener('click', function(e){
+    favtasks()
 })
