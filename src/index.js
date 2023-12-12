@@ -6,6 +6,9 @@ import './images/7.png'
 import './images/8.png'
 import './images/10.png'
 import './images/11.png'
+import './images/del.png'
+import './images/favor.png'
+import './images/favorited.png'
 import {taskinfo, toggleadd, addtask, addproject, storageaval, createstorage,
 loadstorage, checkstorage, optionscreen, showtasks, expcp, exppi, exppc, dosomething, bapage, fwardapage
 } from './modules'
@@ -25,8 +28,8 @@ b1.addEventListener('click', function(e){
 let b2 =  document.querySelector(".submit")
 b2.addEventListener('click', function(e){
     if(document.querySelector("#projname").value == "" || document.querySelector("#projname").value == " ") return
-    toggleadd()
-    dosomething()
+    if(!dosomething()) return
+    else toggleadd()
 })
 
 let b3 = document.querySelectorAll(".option")
@@ -58,7 +61,8 @@ at.addEventListener('click', function(e){
     console.log('hola')
     if(form.checkValidity() == false) return
     optionscreen()
-    addtask()
+    
+    for(let i = 0; i < 50; i++)addtask()
 })
 })
 
