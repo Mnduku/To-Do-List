@@ -313,3 +313,9 @@ input:focus,  textarea:focus{
     cursor:grab;
     transform: scale(105%);
 }
+
+.expand{
+    height: 100px;
+    width: 100%;
+    background-color: black;
+}

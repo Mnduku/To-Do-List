@@ -98,7 +98,6 @@ function addproject(){
 function addprojectlistener(b){
     b.addEventListener('click', function(e){
     if(currentproject == b){
-        console.log("gay")
         b.classList.toggle("selectedtab")
         switch(currentoption){
             case 0: alltasks()
@@ -217,6 +216,7 @@ function addtask(){
 function createtask(newtask){
     let x = document.createElement('div')
     x.classList.toggle('task')
+    x.addEventListener('click', function(e){taskpress(e)})
     x.textContent = newtask.name
     let a = document.createElement('div')
     a.classList.toggle("dates2")
@@ -334,10 +334,14 @@ function fwardapage(){
 }
 
 function favorpress(e){
+    console.log("NIGGGSSSSSSSSS")
     e.classList.toggle('favorited')
     let thisproject = getselectedproject()
     let thistask = getworkingtask(e.parentNode)
     thisproject.tasks[thistask].priority = true
+    console.log(thisproject.tasks)
+    let index = alltaskslist.findIndex(o => o.name == thisproject.tasks[thistask].name);
+    alltaskslist[index] = thisproject.tasks[thistask]
     createstorage()
 }
 
@@ -360,20 +364,21 @@ function alltasks(){
 function favtasks(){
     let favlist = []
     alltaskslist.forEach(element => {
-        if(element.priority = true){favlist.push(element)}
+        if(element.priority == true){
+            favlist.push(element)}
     });
     showtasks3(favlist)
-    updatepages2(favlist)
-    
+    updatepages2(favlist) 
 }
-function favtasks2(a){
-    
-}
-
 
 function taskpress(e){
+    console.log("taskpress")
     let thisproject = getselectedproject()
     let thistask = getworkingtask(e.parentNode)
+    thistask = thisproject.tasks[thistask]
+    let x = document.createElement('div')
+    x.classList.toggle("expand")
+    thistask.appendChild(x)
 }
 
 
