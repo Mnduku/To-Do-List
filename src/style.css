@@ -16,6 +16,8 @@ p, a, label, legend{
 legend{
     font-size: 26px;
     margin-bottom: 20px;
+    font-family: myfontbold;
+    margin-top: 10px;
 }
 .pheader{
     font-size: 33px;
@@ -166,6 +168,9 @@ input:focus,  textarea:focus{
     width: 350px;
     border-radius: 8px;
     background: rgba(239, 153, 33);
+    background-color: #f42b03;
+    background-color: #939393;
+    
     box-shadow: 0 0 0 1000px rgba(0, 0, 0, .3);
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .3);
     border: 1px solid rgb(3, 3, 3);
@@ -184,6 +189,7 @@ input:focus,  textarea:focus{
     all: unset;
     background-color: white;
     border-radius: 10px;
+    border: 1px solid black;
 }
 #tinput1{
     text-align: center;
@@ -223,7 +229,6 @@ input:focus,  textarea:focus{
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50%;
-    background-color: red;
     background-size: 50%;
 }
 .addtasker{
