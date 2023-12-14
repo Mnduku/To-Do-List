@@ -25,7 +25,7 @@ function tasklistarrow(){
 }
 
 function getselectedproject(){
-    let index = projectlist.findIndex(o => o.name === currentproject.textContent);
+    let index = projectlist.findIndex(o => o.name == currentproject.textContent);
     let thisproject = projectlist[index]
     return thisproject
 }
@@ -85,7 +85,10 @@ function addproject(){
         pagecount: 1,
         currentpage: 1,
     })
-    d.addEventListener('click', function(e){removelistener(d)})
+    d.addEventListener('click', function(e){
+        removelistener(d)
+        s.stopPropagation(e)
+    })
     projectindex = projectindex + 1
     untoggle()
     currentproject = b
@@ -179,7 +182,7 @@ function dosomething(){
 
 function createstorage(){
     if(alltasks != undefined) localStorage.setItem("alltasks", JSON.stringify(alltaskslist))
-    localStorage.setItem("currentproject", JSON.stringify(currentproject))
+    if(currentproject != undefined)localStorage.setItem("currentproject", JSON.stringify(currentproject))
     localStorage.setItem("projectchanged", JSON.stringify(projectchanged))
     localStorage.setItem("projectindex", JSON.stringify(projectindex))
     if(projectlist != undefined)localStorage.setItem("projectlist", JSON.stringify(projectlist))
@@ -204,16 +207,14 @@ function loadstorage(){
         let b = document.createElement("div")
         let c = document.createElement("button")
         c.classList.toggle("deleteproject")
-        c.addEventListener('click', function(e){removelistener(e)})
+        c.addEventListener('click', function(e){removelistener(c)})
         b.classList.toggle('project')
         b.textContent = proj.name
         b.appendChild(c)
         addprojectlistener(b)
         a.appendChild(b)
-        
     });  
     alltasks()
-   
 }
 
 function checkstorage(){
@@ -229,14 +230,20 @@ function checkstorage(){
         }
     }
 }
+function clearform(){
+    let info1 = document.querySelector('#tinput1').value = null
+    const info2 = document.querySelector('#tinput2').value = ""
+    let info4 = document.querySelector('#tinput4').value = ""
+}
 function addtask(){
     const form = document.querySelector('.taskform')
     let info1 = document.querySelector('#tinput1').value
     const info2 = document.querySelector('#tinput2').value
     const info3 = document.querySelector('#tinput3').value
     const info4 = document.querySelector('#tinput4').value
+    clearform()
     let thisproject = getselectedproject()
-    info1 = info1 + " " + Math.ceil(10*(Math.random()))  //RANDOM INPUT GENERATOR
+    //info1 = info1 + " " + Math.ceil(10*(Math.random()))  //RANDOM INPUT GENERATOR
     thisproject.tasks.push(new taskinfo(info1,info2,info3,info4))
     alltaskslist.push(new taskinfo(info1,info2,info3,info4))
     createstorage()
@@ -247,7 +254,6 @@ function addtask(){
 function createtask(newtask){
     let x = document.createElement('div')
     x.classList.toggle('task')
-    x.addEventListener('click', function(e){taskpress(x)})
     x.textContent = newtask.name
     let a = document.createElement('div')
     a.classList.toggle("dates2")
@@ -256,7 +262,10 @@ function createtask(newtask){
     let c = document.createElement('a')
     c.classList.toggle("due")
     b.textContent = "Added: " + newtask.date
-    if(c.textContent != ""){c.textContent = "Deadline: "+ newtask.due}
+    if(newtask.due){
+        c.textContent = "Deadline: "+ newtask.due
+    }
+
     a.appendChild(b)
     a.appendChild(c)
     x.appendChild(a)
@@ -265,8 +274,15 @@ function createtask(newtask){
     let e = document.createElement('button')
     e.classList.toggle("favor")
     if(newtask.priority == true){e.classList.toggle('favorited')}
-    e.addEventListener('click', function(){ favorpress(e)})
-    d.addEventListener('click', function(){delpress(d)})
+    e.addEventListener('click', function(s){
+        favorpress(e)
+    s.stopPropagation()
+})
+    d.addEventListener('click', function(s){
+        delpress(d)
+        s.stopPropagation()
+    })
+    x.addEventListener('click', function(e){taskpress(x)})
     x.appendChild(d)
     x.appendChild(e)
     return x
@@ -293,7 +309,6 @@ function showtasks(thisproject){
     let y = document.querySelectorAll('.task')
     let z = document.querySelector(".tasklist")
     z.innerHTML = ""
-
     let j = 0
     if(thisproject.tasks.length <= 0){
         notfound()
@@ -304,10 +319,9 @@ function showtasks(thisproject){
         let v = createtask(thisproject.tasks[thisproject.tasks.length - (j+1)])
         j = j + 1
         z.appendChild(v)
+        found()
     }
-    found()
     x.appendChild(z)
-
 }
 
 function showtasks2(a,b, backone){
@@ -355,7 +369,6 @@ function showtasks3(chosen){
     }
     x.appendChild(z)
     found()
-
 }
 
 function bapage(){
@@ -380,10 +393,18 @@ function favorpress(e){
 }
 
 function delpress(e){
+    if(ignoreprojectsettings) return //cant remove projects on all page
     let thisproject = getselectedproject()
     let thistask = getworkingtask(e.parentNode)
     e.parentNode.parentNode.removeChild(e.parentNode)
     thisproject.tasks.splice(thistask,1)
+    alltaskslist =[]
+    projectlist.forEach(element => {
+        element.tasks.forEach(element2 => {
+            alltaskslist.push(element2)
+        });
+    });
+    
     createstorage()
     showtasks(thisproject)
     updatepages(thisproject)
@@ -420,14 +441,19 @@ function favtasks(){
 }
 
 function removelistener(x){
-        if(projectlist === undefined){return}
-        let indexi = projectlist.findIndex(k => k.name == x.parentNode.name);
+        if(projectlist == undefined){return}
+        console.log(x)
+    
+        let indexi = projectlist.findIndex(k => k.name == x.parentNode.textContent); 
+        console.log("er")  
+    
         if(projectlist[indexi] == currentproject){
             ignoreprojectsettings  = true
             currentproject = undefined
             alltasks()
         }
         projectlist.splice(indexi,1)
+        console.log(indexi)
         let plist = x.parentNode.parentNode
         plist.removeChild(x.parentNode)
         createstorage()
@@ -443,7 +469,6 @@ function found(){
     if(z.classList.contains("see")) z.classList.remove('see')
 }
 function taskpress(e){
-    console.log(e)
     let text  = ""
     let thistask
    
@@ -451,14 +476,12 @@ function taskpress(e){
         for (let i = 0; i < e.childNodes.length; ++i){
             if (e.childNodes[i].nodeType === Node.TEXT_NODE){
                 text = text +  e.childNodes[i].textContent;
-                console.log(text)
                 break;
             }
             break;
         }
-        let index = alltaskslist.findIndex(o => o.name === text);
+        let index = alltaskslist.findIndex(o => o.name == text);
         thistask = alltaskslist[index]
-        console.log(thistask)
     }
 
     else{
@@ -481,12 +504,21 @@ function taskpress(e){
     p.classList.toggle('taskp')
     p.textContent = thistask.desc
     x.appendChild(p)
+    x.addEventListener('click', function(s){
+        removedesc(x)
+        s.stopPropagation()
+    })
+    e.appendChild(x)
     expanded = e
     removeadd = x
-    e.appendChild(x)
 }
 
-//no double names
+function removedesc(){
+    expanded.removeChild(removeadd)
+    removeadd = undefined
+    expanded = undefined
+}
+
 export{taskinfo, addproject, toggleadd, addtask, storageaval, createstorage, loadstorage, checkstorage,
 optionscreen, showtasks, exppc, exppi, expcp, dosomething, bapage, fwardapage, alltasks,
 favtasks, tasklistarrow}
