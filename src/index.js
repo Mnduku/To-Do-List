@@ -66,7 +66,7 @@ at.addEventListener('click', function(e){
     console.log('hola')
     if(form.checkValidity() == false) return
     optionscreen()
-    for(let i = 0; i < 10; i++)addtask()
+    addtask()
 })
 })
 
