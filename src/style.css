@@ -362,7 +362,7 @@ input:focus,  textarea:focus{
 .expand{
     animation: expand 0.4s 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) ;
     position: absolute;
-    height: 57px;
+    max-height: 65px;
     width: 100.5%;
     background-color: black;
     left: 0%;
@@ -370,22 +370,18 @@ input:focus,  textarea:focus{
     background-color: white;
     box-shadow: 1px 1px 1px 1px black;
     padding-left: 15px;
-    padding-top: 15px;
     font-size: 14px;
-    text-wrap: wrap;
+    inline-size: 100%;
+    overflow-wrap: break-word;
+    padding-bottom: 8px;
 }
 .taskp{
-    width: 100px;
-    text-wrap: wrap;
-    height: 75px;
+    height: 67px;
 }
-@media only screen and (max-width: 700px) {
-    .due {
-      padding-right: 275px;
-      width: 150px;
-    }
-    .added{
-        margin-right: 275px ;
-        width: 150px;
+@media only screen and (max-width: 720px) {
+    .dates2{
+        position: relative;
+        width: 400px;
+        left:100px
     }
   }
