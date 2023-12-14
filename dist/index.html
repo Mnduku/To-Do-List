@@ -19,30 +19,30 @@
                     <img src="assets/images/1.png" class="icon">
                     <a class="iconname">All</a>
                 </div>
-                <div class="option">
-                    <img src="assets/images/4.png" class="icon">
-                    <a class="iconname">?</a>
-                </div>
-                <div class="option">
-                    <img src="assets/images/7.png" class="icon">
-                    <a class="iconname">?</a>
-                </div>
                 <div class="option" id = "star">
                     <img src="assets/images/8.png" class="icon">
                     <a class="iconname" >Favorited</a>
+                </div>
+                <div class="option" id = "na1">
+                    <img src="assets/images/7.png" class="icon" >
+                    <a class="iconname">N/A</a>
+                </div>
+                <div class="option" id = "na2">
+                    <img src="assets/images/7.png" class="icon" >
+                    <a class="iconname">N/A</a>
                 </div>
                 <div class="bar"></div>
                 <div class="header">
                     <a class="iconname">Projects</a>
                 </div>
                 <div class="projectlist">
-
+                    <img src="assets/images/nothing.png" class="nothing">
                 </div>
                 <button class="addproj">+</button>
 
                 <form class = "cname" action = "#" method = "get">
                 <div class="form">
-                    <input type = "text" id = "projname" required/>
+                    <input type = "text" id = "projname" required maxlength="14"/>
                     <button class = "submit" type = "submit" >Add</button>
                 </div>
                 </form>
@@ -58,7 +58,7 @@
                     <button class="pageforward"></button>
                 </div>
                 <div class="optionpane">
-                     <form action="#" method = "get" class="taskform" >
+                     <form action="#" method = "get" class="taskform" novalidate >
                         <legend>Task info</legend>
                         <div class = "formdiv"><label for = "tinput1"  class = "tlabel" id = "tlabel1">Name</label>
                         <input type = "text"  class = "tinput" id = "tinput1" maxlength="15" required/></div>
