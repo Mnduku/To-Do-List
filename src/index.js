@@ -9,8 +9,11 @@ import './images/11.png'
 import './images/del.png'
 import './images/favor.png'
 import './images/favorited.png'
-import { toggleadd, addtask,checkstorage, optionscreen, alltasks, expcp, exppi, exppc, dosomething, bapage, fwardapage,
-    tasklistarrow, favtasks
+import './images/nothing.png'
+import { toggleadd, addtask,checkstorage, optionscreen, 
+    alltasks, expcp, exppi, exppc,
+     dosomething, bapage, fwardapage,
+    tasklistarrow, favtasks, 
 } from './modules'
 
 let currentproject = expcp()
@@ -63,8 +66,7 @@ at.addEventListener('click', function(e){
     console.log('hola')
     if(form.checkValidity() == false) return
     optionscreen()
-    
-    for(let i = 0; i < 50; i++)addtask()
+    for(let i = 0; i < 10; i++)addtask()
 })
 })
 
