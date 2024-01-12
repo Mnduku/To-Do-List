@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, '/'),
+    path: path.resolve(__dirname, './'),
   },
   module: {
       rules: [
@@ -17,7 +17,7 @@ module.exports = {
         type: 'asset/resource',
         generator: {
           // keep original filenames and copy images to `dist/img/`
-          filename: 'assets/images/[name][ext]', 
+          filename: './[name][ext]', 
         },
         },
         
@@ -26,7 +26,7 @@ module.exports = {
           type: 'asset/resource',
           generator: {
             // keep original filenames and copy images to `dist/img/`
-            filename: 'assets/fonts/[name][ext]', 
+            filename: './[name][ext]', 
           },
         },
         {
